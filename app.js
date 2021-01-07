@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const middleware = require('./utils/middleware')
 const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 
 
 // Opening a connection to the database
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.use(express.json())
 app.use(morgan('tiny'))
 app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
