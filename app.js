@@ -1,8 +1,10 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 //const cors = require('cors')
 const mongoose = require('mongoose')
+const usersRouter = require('./controllers/users')
 
 // Opening a connection to the database
 console.log('connecting to MongoDB')
@@ -13,6 +15,10 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .catch((error) => {
     console.log('error connecting to MongoDB:', error.message)
   })
+
+app.use(express.json())
+app.use(morgan('tiny'))
+app.use('/api/users', usersRouter)
 
 mongoose.connection.close()
 module.exports = app
